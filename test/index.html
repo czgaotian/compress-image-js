@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compress Image</title>
+</head>
+<body>
+    <div>
+        <input type="file" accept="image/*"  id="file" value=""/> 
+        <button id="compress">compress width:100</button>
+    </div>
+    <div>size: <span id="pre"></span>kb</div>
+    <div>after compress size: <span id="after"></span>kb</div>
+    <div>resource</div>
+    <img width=300 id="image" alt="resource" />
+    <div>compress</div>
+    <img id="compressimg" alt="after compress" />
+</body>
+<script>
+    var oFile = document.querySelector("#file");
+    var image = document.querySelector('#image');
+    var afterImage = document.querySelector('#compressimg');
+    var pre = document.querySelector('#pre');
+    var after = document.querySelector('#after');
+    console.log(oFile)
+    oFile.addEventListener('change',function() {
+        let file = this.files[0];
+        image.src = window.URL.createObjectURL(file);
+        pre.innerHTML = (file.size / 1024).toFixed(2);
+    })
+    document.querySelector('#compress').addEventListener('click', function() {
+        console.log(oFile.files[0])
+        compress(oFile.files[0], {
+            size: 200
+        }).then(file => {
+            afterImage.src = window.URL.createObjectURL(file);
+            after.innerHTML = (file.size / 1024).toFixed(2);
+        })
+    })
+</script>
+</html>
